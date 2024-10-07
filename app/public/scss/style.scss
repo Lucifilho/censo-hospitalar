@@ -1,0 +1,194 @@
+@import "variaveis","components/footer","components/header", "estabelecimentos/novo-estabelecimento.scss",
+"eventos/novoEvento", "publicas/home", "eventos/roles", "eventos/evento", "estabelecimentos/estabelecimento", "acesso/acesso";
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+*{
+
+    padding: 0;
+    margin: 0;
+    font-family: "Poppins", sans-serif;
+}
+
+img{
+
+    object-fit: cover !important;
+}
+
+@keyframes fadeIn {
+
+    50% {
+
+        opacity: 1;
+    }
+
+    100%{
+
+        opacity: 0;
+    }
+}
+
+.formulario{
+
+    display: flex;
+    flex-direction: column;
+    width: 500px;
+    max-width: 90%;
+    gap: 20px;
+    box-shadow: 5px 5px 15px 5px rgba($preto,0.5);
+    padding: 50px;
+    border-radius: 20px;
+    background-color: $branco;
+
+    .linha{
+
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        gap: 20px;
+    }
+
+    .grupo{
+
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        width: 100%;
+        max-width: 100%;
+
+        label{
+
+            color: $preto;
+            font-size: $fs18;
+            font-weight: 700;
+        }
+
+        .input,textarea,select{
+
+            background-color: $cinzaInput;
+            color: $preto;
+            font-size: $fs16;
+            font-weight: 600;
+            border: none;
+            border-radius: 10px;
+            min-height: 35px;
+            padding: 4px 10px;
+            width: 100%;
+            max-width: 100%;
+        }
+    }
+
+    button{
+
+        background-color: $amarelo;
+        color: $preto;
+        padding: 10px;
+        border-radius: 10px;
+    }
+}
+
+.bloco-pagina{
+
+    align-items: center;
+
+}
+
+.erro{
+
+    position: absolute;
+    top: 10%;
+    left: 0;
+    background-color: $vermelho;
+    color: $branco;
+    padding: 10px;
+    border-radius: 0 10px 10px 0;
+    font-weight: 600;
+    animation: fadeIn 5s ;
+    opacity: 0;
+    z-index: 10;
+}
+
+.msg{
+
+    background-color: $azulMarinho;
+    border: 1px solid $azulMarinho;
+    color: $branco;
+    padding: 10px;
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+    text-decoration: underline;
+    font-weight: 700;
+    font-size: $fs16;
+    animation: fadeIn 5s ;
+    opacity: 0;
+    justify-content: center;
+
+}
+
+h1,h2,h3,h4,p,ul,li{
+
+    padding: 0;
+    margin: 0 !important;
+}
+
+input{
+
+    &:focus-visible,&:focus{
+
+        outline: none;
+    }
+}
+
+body{
+
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+main{
+
+    width: 100%;
+}
+
+.container{
+
+    width: 100%;
+    max-width: 1300px !important;
+    padding: 50px 0 !important;
+}
+
+li{
+
+    list-style-type: none;
+}
+
+button{
+
+    background-color: transparent;
+    border: none;
+}
+
+a,span{
+
+    text-decoration: none !important;
+}
+
+@media only screen and (max-width: 770px) {
+
+    .hidden-mobile{
+
+        display: none;
+    }
+
+    .formulario{
+
+        .linha{
+
+            flex-wrap: wrap;
+        }
+    }
+
+}
