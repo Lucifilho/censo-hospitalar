@@ -18,7 +18,7 @@
 </head>
 <body>
 
-<livewire:components.header/>
+<livewire:layout.header/>
 
 <main>
 
@@ -32,7 +32,7 @@
 
 </main>
 
-<livewire:components.footer/>
+<livewire:layout.footer/>
 
 @livewireScripts
 
