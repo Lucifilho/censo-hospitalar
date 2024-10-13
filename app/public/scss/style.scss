@@ -1,5 +1,4 @@
-@import "variaveis","components/footer","components/header", "estabelecimentos/novo-estabelecimento.scss",
-"eventos/novoEvento", "publicas/home", "eventos/roles", "eventos/evento", "estabelecimentos/estabelecimento", "acesso/acesso";
+@import "variaveis","layout/footer","layout/header", "pacientes/lista-pacientes", "pages/home";
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 *{
@@ -88,8 +87,20 @@ img{
 
 .bloco-pagina{
 
+    width: 100%;
+    max-width: 100%;
+    display: flex;
     align-items: center;
+    justify-content: center;
+}
 
+.bloco-conteudo{
+
+    width: 100%;
+    max-width: 1024px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .erro{
@@ -142,22 +153,18 @@ input{
 body{
 
     width: 100%;
-    min-height: 100vh;
+    min-height: 100%;
     display: flex;
     flex-direction: column;
+    position: fixed;
+    height: 100%;
     gap: 5px;
+    justify-content: space-between;
 }
 
 main{
 
     width: 100%;
-}
-
-.container{
-
-    width: 100%;
-    max-width: 1300px !important;
-    padding: 50px 0 !important;
 }
 
 li{
@@ -178,7 +185,7 @@ a,span{
 
 @media only screen and (max-width: 770px) {
 
-    .hidden-mobile{
+    .esconder-mobile{
 
         display: none;
     }
