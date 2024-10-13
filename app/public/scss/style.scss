@@ -61,7 +61,7 @@ img{
             font-weight: 700;
         }
 
-        .input,textarea,select{
+        .input,.textarea,.select{
 
             background-color: $cinzaInput;
             color: $preto;
@@ -76,12 +76,27 @@ img{
         }
     }
 
-    button{
+    button, .btn-cancelar{
 
-        background-color: $amarelo;
-        color: $preto;
+        border: 1px solid $azulPrincipal;
+        color: $azulPrincipal;
         padding: 10px;
         border-radius: 10px;
+        font-weight: 700;
+        transition: .3s;
+        font-size: $fs20;
+        text-align: center;
+
+        &:hover{
+
+            background-color: $azulPrincipal;
+            color: $branco;
+        }
+    }
+
+    .btn-cancelar{
+
+        font-size: $fs16;
     }
 }
 
@@ -153,10 +168,9 @@ input{
 body{
 
     width: 100%;
-    min-height: 100%;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
-    position: fixed;
     height: 100%;
     gap: 5px;
     justify-content: space-between;

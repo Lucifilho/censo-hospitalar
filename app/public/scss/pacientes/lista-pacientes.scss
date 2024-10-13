@@ -1,0 +1,204 @@
+@import "../variaveis";
+
+.pacientes-pagina{
+
+    display: flex;
+    width: 100%;
+
+    .bloco-formulario-paciente{
+
+        flex-direction: column;
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        min-height: 100%;
+        padding: 50px 0;
+        justify-content: center;
+        align-items: center;
+        visibility: visible;
+        background-color:  rgba( $preto, 0.8);
+        backdrop-filter: blur(3px);
+        z-index: 10;
+        gap: 40px;
+
+        h2{
+
+            text-align: center;
+        }
+
+        .visualizar-dados{
+
+            background-color: $branco;
+            border-radius: 10px;
+            padding: 10px;
+        }
+    }
+
+    .bloco-pacientes{
+
+        display: flex;
+        flex-direction: column;
+        gap: 50px;
+        align-items: center;
+        width: 100%;
+        padding-bottom: 30px;
+
+        .bloco-pesquisa{
+
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            max-width: 1024px;
+            gap: 10px;
+
+            input, select{
+
+                border-radius: 5px;
+                border: 1px solid $cinzaClaro;
+                width: 100%;
+                max-width: 100%;
+                padding: 4px 10px;
+            }
+
+            select{
+
+                max-width: 20%;
+            }
+
+            .btn-cadastrar{
+
+                width: 100%;
+                max-width: 20%;
+                color: $azulPrincipal;
+                border: 1px solid $azulPrincipal;
+                font-size: $fs18;
+                font-weight: 600;
+                text-align: center;
+                align-self: center;
+                padding: 5px;
+                border-radius: 5px;
+                transition: .3s;
+
+                &:hover{
+
+                    background-color: $azulPrincipal;
+                    color: $branco;
+                }
+            }
+        }
+
+        .lista-pacientes{
+
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: 100%;
+            max-width: 100%;
+            padding: 15px;
+
+            .cabecalho{
+
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                width: 100%;
+                border-radius: 10px;
+                color: $branco;
+                background-color: $azulPrincipal;
+                padding: 15px;
+                font-weight: 600;
+                transition: .3s;
+            }
+
+            .paciente{
+
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                width: 100%;
+                box-shadow: 5px 5px 15px 5px rgba($preto,0.5);
+                border-radius: 10px;
+                color: $azulPrincipal;
+                padding: 15px;
+                font-weight: 600;
+                transition: .3s;
+
+                &:hover{
+
+                    background-color: $azulPrincipal;
+                    color: $branco;
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 770px) {
+
+    .pacientes-pagina{
+
+        .bloco-pacientes{
+
+            .bloco-pesquisa{
+
+                flex-direction: column;
+                align-items: center;
+
+                input, select{
+
+                    border-radius: 10px;
+                    border: 1px solid $cinzaClaro;
+                    width: 500px;
+                    max-width: 90%;
+                    padding: 4px 10px;
+                }
+            }
+
+            .lista-pacientes{
+
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+                width: 500px;
+                max-width: 90%;
+                padding: 15px;
+
+                .status{
+
+                    position: relative;
+                    text-align: center;
+                    width: 25%;
+                    padding: 10px;
+                    color: $branco;
+                    font-size: $fs16;
+                    font-weight: 700;
+                }
+
+                .Aberto{
+
+                    background-color: $verde;
+                }
+
+                .Encerrado{
+
+                    background-color: $vermelho;
+                }
+
+                .paciente{
+
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    width: 100%;
+                    box-shadow: 5px 5px 15px 5px rgba($preto,0.5);
+                    border-radius: 10px;
+                    padding-bottom: 10px;
+
+                }
+            }
+        }
+    }
+
+}
