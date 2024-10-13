@@ -27,50 +27,40 @@ class ListaPacientes extends Component
             $pacientes = Paciente::where(function ($query) use ($search) {
 
                 $query->Where('nome', 'like', '%' . $this->search . '%')
-                    ->orWhere('data_inicio', 'like', '%' . $this->search . '%');
+                    ->orWhere('codigo', 'like', '%' . $this->search . '%')
+                    ->orWhere('guia', 'like', '%' . $this->search . '%');
+
 
             })
                 ->orderBy('created_at')
-                ->paginate(10);
-
+                ->paginate(5);
         }elseif ($statusPaciente){
 
-            if ($statusPaciente === 'Todos') {
+            if ($statusPaciente === 'internado') {
 
                 $pacientes = Paciente::where(function ($query) use ($search) {
 
-                    $query->Where('categoria', 'Todos');
+                    $query->Where('status', 'internado');
 
                 })
                     ->orderBy('nome')
                     ->orderBy('created_at')
-                    ->paginate(10);
-
-            } elseif($statusPaciente === 'LGBTQIA+'){
+                    ->paginate(5);
+            } elseif($statusPaciente === 'alta'){
 
                 $pacientes = Paciente::where(function ($query) use ($search) {
 
-                    $query->Where('categoria', 'LGBTQIA+');
+                    $query->Where('status', 'alta');
 
                 })
                     ->orderBy('nome')
                     ->orderBy('created_at')
-                    ->paginate(10);
-            }elseif($statusPaciente === 'Heterossexual'){
-
-                $pacientes = Paciente::where(function ($query) use ($search) {
-
-                    $query->Where('categoria',  'Heterossexual');
-
-                })
-                    ->orderBy('nome')
-                    ->orderBy('created_at')
-                    ->paginate(10);
+                    ->paginate(5);
             }
 
         }else{
 
-            $pacientes = Paciente::paginate(10);
+            $pacientes = Paciente::paginate(5);
 
         }
 

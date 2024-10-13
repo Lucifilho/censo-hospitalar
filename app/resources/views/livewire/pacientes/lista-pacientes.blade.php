@@ -1,11 +1,11 @@
-<div class="pacientes-pagina fadeInUp">
+<div class="pacientes-pagina bloco-pagina fadeInUp">
 
-    {{-- Formulário para cadastrar novo paciente --}}
     <div wire:ignore>
         @livewire('pacientes.cadastrar-paciente')
     </div>
 
-    <div class="bloco-pacientes">
+    <div class="bloco-pacientes bloco-conteudo">
+
         <div class="cabecalho">
             <h1>Lista de Pacientes</h1>
             <span>Busque por seus pacientes</span>
@@ -19,10 +19,19 @@
                 <option value="alta">Alta</option>
             </select>
 
-            <a class="btn-cadastrar" href="#" onclick="document.querySelector('.formulario-paciente').style.display = 'block';">Registrar Paciente</a>
+            <a class="btn-cadastrar" href="#" onclick="document.querySelector('.bloco-formulario-paciente').style.display = 'flex';">Registrar Paciente</a>
+
         </div>
 
         <div class="lista-pacientes">
+
+            <div class="cabecalho">
+                <span>Código</span>
+                <span>Nome</span>
+                <span>Status</span>
+                <span>Entrada</span>
+            </div>
+
             @foreach($pacientes as $paciente)
                 <a href="/paciente-{{$paciente -> id}}/{{ str_replace("-", "", str_replace( ".", "",  $paciente -> codigo))}}" class="paciente">
                     <span>{{$paciente -> codigo}}</span>
@@ -42,7 +51,7 @@
 
 <script>
     window.addEventListener('pacienteCadastrado', () => {
-        document.querySelector('.formulario-paciente').style.display = 'none';
+        document.querySelector('.bloco-formulario-paciente').style.display = 'none';
         Livewire.emit('atualizarListaPacientes');
     });
 </script>
