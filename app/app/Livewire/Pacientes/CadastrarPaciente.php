@@ -12,43 +12,65 @@ class CadastrarPaciente extends Component
     use WithFileUploads;
 
     public $nome;
-    public $dataNascimento;
+    public $nascimento;
     public $guia;
-    public $dataEntrada;
-    public $dataSaida;
+    public $entrada;
+    public $saida;
     public $status;
     public $planilha;
     public $dadosPlanilha = [];
 
     protected $rules = [
         'nome' => 'required|string|max:255',
-        'dataNascimento' => 'required|date',
+        'nascimento' => 'required|date',
         'guia' => 'required|unique:pacientes,guia',
-        'dataEntrada' => 'required|date',
-        'dataSaida' => 'nullable|date',
+        'entrada' => 'required|date',
+        'saida' => 'nullable|date',
         'status' => 'required|in:internado,alta',
     ];
 
     public function cadUsuario()
     {
-        $this->validate();
 
-        $codigo = Carbon::now()->format('Ymdis');
+            // Verifica se já existe um paciente com o mesmo nome e nascimento, mas com código diferente
+            $pacienteExistente = Paciente::where('nome', $this->nome)
+                ->where('nascimento', $this->nascimento)
+                ->where('guia', '!=', $this->guia)
+                ->first();
 
-        $status = $this->dataSaida ? 'alta' : 'internado';
+            if ($pacienteExistente) {
+                session()->flash('erro', 'Paciente já possui cadastro com este nome e data de nascimento. Verifique o código do paciente.');
+                return;
+            }
 
-        Paciente::create([
-            'nome' => $this->nome,
-            'nascimento' => $this->dataNascimento,
-            'codigo' => $codigo,
-            'guia' => $this->guia,
-            'entrada' => $this->dataEntrada,
-            'saida' => $this->dataSaida,
-            'status' => $status,
-        ]);
+            $hoje =strtotime(Carbon::now()->format('Y-m-d'));
 
-        $this->reset(['nome', 'dataNascimento', 'guia', 'dataEntrada', 'dataSaida', 'status']);
-        session()->flash('message', 'Paciente cadastrado com sucesso!');
+            if ($hoje < strtotime($this -> saida)){
+
+                $status = 'internado';
+
+            }else{
+
+                $status = 'alta';
+
+            }
+
+            $codigo = Carbon::now()->format('Ymdis');
+
+            Paciente::create([
+                'nome' => $this->nome,
+                'nascimento' => $this->nascimento,
+                'codigo' => $codigo,
+                'guia' => $this->guia,
+                'entrada' => $this->entrada,
+                'saida' => $this->saida,
+                'status' => $status,
+            ]);
+
+            // Limpar os campos e exibir a mensagem de sucesso
+            $this->reset(['nome', 'nascimento', 'guia', 'entrada', 'saida', 'status']);
+            session()->flash('msg', 'Paciente cadastrado com sucesso!');
+
     }
 
     public function previaPlanilha()
@@ -73,7 +95,19 @@ class CadastrarPaciente extends Component
 
     public function salvarUsuarios()
     {
-        foreach ($this->dadosPlanilha as $data) {
+        foreach ($this->previewData as $data) {
+            // Verificar se já existe um paciente com o mesmo nome e nascimento, mas com código diferente
+            $pacienteExistente = Paciente::where('nome', $data['nome'])
+                ->where('nascimento', Carbon::createFromFormat('d/m/Y', $data['nascimento'])->format('Y-m-d'))
+                ->where('guia', '!=', $data['guia'])
+                ->first();
+
+            if ($pacienteExistente) {
+                session()->flash('message', 'Paciente com nome ' . $data['nome'] . ' e nascimento ' . $data['nascimento'] . ' já possui cadastro. Verifique o código.');
+                return;
+            }
+
+            // Salvar o paciente caso não exista um conflito
             Paciente::create([
                 'nome' => $data['nome'],
                 'nascimento' => Carbon::createFromFormat('d/m/Y', $data['nascimento'])->format('Y-m-d'),
@@ -85,7 +119,7 @@ class CadastrarPaciente extends Component
             ]);
         }
 
-        $this->dadosPlanilha = [];
+        $this->previewData = [];
         session()->flash('message', 'Todos os pacientes foram salvos com sucesso!');
     }
 

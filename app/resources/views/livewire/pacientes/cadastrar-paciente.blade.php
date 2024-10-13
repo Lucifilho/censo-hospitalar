@@ -16,9 +16,9 @@
                     @error('nome') <span class="error">{{ $message }}</span> @enderror
                 </div>
                 <div class="grupo">
-                    <label for="dataNascimento">Data de Nascimento</label>
-                    <input class="input" type="date" id="dataNascimento" wire:model="dataNascimento">
-                    @error('dataNascimento') <span class="error">{{ $message }}</span> @enderror
+                    <label for="nascimento">Data de Nascimento</label>
+                    <input class="input" type="date" id="nascimento" wire:model="nascimento">
+                    @error('nascimento') <span class="error">{{ $message }}</span> @enderror
                 </div>
             </div>
             <div class="linha">
@@ -30,14 +30,14 @@
             </div>
             <div class="linha">
                 <div class="grupo">
-                    <label for="dataEntrada">Entrada</label>
-                    <input class="input" type="date" id="dataEntrada" wire:model="dataEntrada">
-                    @error('dataEntrada') <span class="error">{{ $message }}</span> @enderror
+                    <label for="entrada">Entrada</label>
+                    <input class="input" type="date" id="entrada" wire:model="entrada">
+                    @error('entrada') <span class="error">{{ $message }}</span> @enderror
                 </div>
                 <div class="grupo">
-                    <label for="dataSaida">Saída</label>
-                    <input class="input" type="date" id="dataSaida" wire:model="dataSaida">
-                    @error('dataSaida') <span class="error">{{ $message }}</span> @enderror
+                    <label for="saida">Saída</label>
+                    <input class="input" type="date" id="saida" wire:model="saida">
+                    @error('saida') <span class="error">{{ $message }}</span> @enderror
                 </div>
             </div>
             <button type="submit">Registrar</button>
