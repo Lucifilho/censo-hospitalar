@@ -1,0 +1,68 @@
+@import "../variaveis";
+
+footer{
+
+    display: flex;
+    background-color: $azulPrincipal;
+    width: 100%;
+    justify-content: center;
+    padding: 10px;
+
+    .rodape{
+
+        display: flex;
+        width: 100%;
+        max-width: 1024px;
+        justify-content: center;
+        color: $branco;
+        gap: 10px;
+        flex-wrap: wrap;
+
+        .politica-termos{
+
+            width: 100%;
+            max-width: 48%;
+            display: flex;
+            align-items: center;
+
+            a{
+
+                color: $branco;
+
+            }
+        }
+
+        .politica-termos,.copy{
+
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            max-width: 100%;
+        }
+    }
+}
+
+@media only screen and (max-width: 770px) {
+
+    footer{
+
+        .rodape{
+
+            max-width: 90%;
+            flex-direction: column;
+
+            .copy, .politica-termos{
+
+                max-width: 100%;
+                flex-direction: column;
+
+            }
+
+            .copy{
+
+                justify-content: center;
+                text-align: center;
+            }
+        }
+    }
+}

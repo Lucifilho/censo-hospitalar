@@ -1,0 +1,75 @@
+@import "../variaveis";
+
+header{
+
+    display: flex;
+    width: 100%;
+    justify-content: center;
+
+    nav{
+
+        display: flex;
+        width: 100%;
+        max-width: 1024px;
+
+        .container-fluid{
+
+            align-items: end !important;
+
+            .navbar-brand{
+
+                padding: 0;
+                margin: 0;
+
+                .logo{
+
+                    width: 100%;
+                    max-width: 200px;
+                    height: auto;
+                }
+            }
+
+            .navbar-toggler{
+
+                .bars{
+
+                    width: 50px !important;
+                }
+            }
+
+            .collapse{
+
+                justify-content: flex-end;
+
+                .nav-link, .nav-link.active{
+
+                    color: $azulPrincipal !important;
+                    font-size: $fs20;
+                    font-weight: 600;
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 770px) {
+
+    header{
+
+        nav{
+
+            .container-fluid{
+
+                align-items: center !important;
+
+                .collapse{
+
+                    .nav-link, .nav-link.active{
+
+                        text-align: center;
+                    }
+                }
+            }
+        }
+    }
+}
