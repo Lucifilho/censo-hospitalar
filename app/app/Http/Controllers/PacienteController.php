@@ -18,6 +18,12 @@ class PacienteController extends Controller
         return view('pages.pacientes.lista-pacientes');
     }
 
+    public function novoPaciente()
+    {
+
+        return view('pages.pacientes.novo-paciente');
+    }
+
     /**
      * Show the form for creating a new resource.
      */
