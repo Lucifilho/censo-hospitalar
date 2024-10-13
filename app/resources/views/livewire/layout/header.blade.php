@@ -22,6 +22,7 @@
                             <a class="nav-link active" aria-current="page" href="/">Home</a>
                         </li>
 
+                        @auth
 
                             <li class="nav-item dropdown">
 
@@ -41,6 +42,7 @@
                             <li class="nav-item dropdown">
 
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Olá, {{$user -> name }}
                                 </a>
 
                                 <ul class="dropdown-menu">
@@ -61,11 +63,13 @@
 
                             </li>
 
+                        @elseguest
 
                             <li class="nav-item">
                                 <a class="nav-link active" aria-current="page" href="/suporte">Suporte</a>
                             </li>
 
+                        @endauth
 
 
                     </ul>
