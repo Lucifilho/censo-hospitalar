@@ -1,9 +1,12 @@
 <div>
+
     <div class="bloco-formulario-paciente" wire:ignore.self style="display: none">
 
         <div class="nav-form">
-            <a class="btn-cancelar" onclick="document.querySelector('.cad-unico').style.display = 'flex';  document.querySelector('.cad-planilha').style.display = 'none'; ">Cadastro individual</a>
-            <a class="btn-cancelar" onclick="document.querySelector('.cad-planilha').style.display = 'flex'; document.querySelector('.cad-unico').style.display = 'none';">Cadastro em massa</a>
+
+            <a class="item-menu" onclick="document.querySelector('.cad-unico').style.display = 'flex';  document.querySelector('.cad-planilha').style.display = 'none'; ">Cadastro individual</a>
+            <a class="item-menu" onclick="document.querySelector('.cad-planilha').style.display = 'flex'; document.querySelector('.cad-unico').style.display = 'none';">Cadastro em massa</a>
+
         </div>
 
         <!-- Formulário para cadastrar um paciente único -->
@@ -85,14 +88,11 @@
                     @endforeach
                     </tbody>
                 </table>
-                <button wire:click="salvarUsuarios">Salvar Todos</button>
+
+                <button class="btn-cadastrar" wire:click="salvarUsuarios">Salvar Todos</button>
+
             </div>
         @endif
 
-        @if (session()->has('message'))
-            <div class="success-message">
-                {{ session('message') }}
-            </div>
-        @endif
     </div>
 </div>
