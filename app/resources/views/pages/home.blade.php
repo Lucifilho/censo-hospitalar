@@ -17,7 +17,7 @@
 
                 <i class="fa fa-user-plus"></i>
 
-                Novo Pacientes
+                Novo Paciente
 
             </a>
 
