@@ -23,11 +23,18 @@
 
 <main>
 
-    @if(session('msg'))
+    @if (session()->has('message'))
 
-        <p class="msg">{{session('msg')}}</p>
+        <p class="msg">{{session('message')}}</p>
 
     @endif
+
+    @if (session()->has('erro'))
+        <p class="erro">
+            {{ session('erro') }}
+        </p>
+    @endif
+
 
     @yield('content')
 
