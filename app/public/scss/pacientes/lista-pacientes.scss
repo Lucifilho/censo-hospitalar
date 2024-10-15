@@ -22,18 +22,13 @@
             max-width: 1024px;
             gap: 10px;
 
-            input, select{
+            input{
 
                 border-radius: 5px;
                 border: 1px solid $cinzaClaro;
                 width: 100%;
                 max-width: 100%;
                 padding: 4px 10px;
-            }
-
-            select{
-
-                max-width: 20%;
             }
 
             .btn-cadastrar{
@@ -116,12 +111,17 @@
 
         .bloco-pacientes{
 
+            .cabecalho{
+
+                text-align: center;
+            }
+
             .bloco-pesquisa{
 
                 flex-direction: column;
                 align-items: center;
 
-                input, select{
+                input{
 
                     border-radius: 10px;
                     border: 1px solid $cinzaClaro;
@@ -129,6 +129,12 @@
                     max-width: 90%;
                     padding: 4px 10px;
                 }
+
+                .btn-cadastrar{
+
+                    max-width: 90%;
+                }
+
             }
 
             .lista-pacientes{
@@ -151,20 +157,9 @@
                     font-weight: 700;
                 }
 
-                .Aberto{
-
-                    background-color: $verde;
-                }
-
-                .Encerrado{
-
-                    background-color: $vermelho;
-                }
-
                 .paciente{
 
                     display: flex;
-                    flex-direction: column;
                     align-items: center;
                     width: 100%;
                     box-shadow: 5px 5px 15px 5px rgba($preto,0.5);
