@@ -8,11 +8,7 @@ Este repositório contém a aplicação **Censo Hospitalar**, desenvolvida para 
 - [Tecnologias Utilizadas](#tecnologias-utilizadas)
 - [Pré-requisitos](#pré-requisitos)
 - [Instalação e Configuração](#instalação-e-configuração)
-- [Como Rodar a Aplicação](#como-rodar-a-aplicação)
-- [Acesso à Demo](#acesso-à-demo)
-- [Contribuições](#contribuições)
-- [Licença](#licença)
-
+  
 ## Sobre o Projeto
 
 O **Censo Hospitalar** é uma aplicação web desenvolvida em Laravel para facilitar o gerenciamento de pacientes e suas internações. Ele oferece um painel administrativo para o cadastro de pacientes e acompanhamento das internações.
@@ -20,7 +16,7 @@ O **Censo Hospitalar** é uma aplicação web desenvolvida em Laravel para facil
 ## Tecnologias Utilizadas
 
 - PHP 8.x
-- Laravel 10.x
+- Laravel 11.x
 - MySQL
 - Composer
 - JavaScript
@@ -35,7 +31,7 @@ Antes de começar, você precisará ter as seguintes ferramentas instaladas em s
 - [MySQL](https://www.mysql.com/downloads/)
 - [Git](https://git-scm.com/)
 
-## Instalação e Configuração
+## Instalação e Configuração/Rodar a Aplicação
 
 1. **Clone o repositório:**
 
