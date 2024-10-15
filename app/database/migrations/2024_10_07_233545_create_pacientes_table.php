@@ -15,11 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('nome');
             $table->date('nascimento');
-            $table->unsignedBigInteger('codigo')->unique();
+            $table->unsignedBigInteger('codigo');
             $table->unsignedBigInteger('guia')->unique();
             $table->date('entrada');
             $table->date('saida')->nullable();
-            $table->enum('status', ['alta', 'internado']);
             $table->timestamps();
         });
     }
