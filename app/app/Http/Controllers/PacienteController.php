@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
+
 class PacienteController extends Controller
 {
     /**
@@ -122,25 +123,25 @@ class PacienteController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Paciente $paciente)
+    public function show($codigo)
     {
-        //
-    }
+        $paciente = Paciente::where('codigo', $codigo)->firstOrFail();
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Paciente $paciente)
-    {
-        //
+        $internacoes = Paciente::where('codigo', $codigo)->get();
+
+        return view('pages.pacientes.ficha-paciente', compact('paciente','internacoes'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdatePacienteRequest $request, Paciente $paciente)
+    public function update(Request $request)
     {
-        //
+        $data = $request -> all();
+
+        Paciente::findOrFail( $request -> id ) -> update($data);
+
+        return redirect() ->back() -> with('message','Paciente atualizado com sucesso');
     }
 
     /**

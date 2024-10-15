@@ -25,11 +25,13 @@
             </div>
 
             @foreach($pacientes as $paciente)
-                <a href="/paciente-{{$paciente -> id}}/{{ str_replace("-", "", str_replace( ".", "",  $paciente -> codigo))}}" class="paciente">
+                <a href="/paciente-{{$paciente -> codigo }}" class="paciente">
+
                     <span>{{$paciente -> codigo}}</span>
                     <span>{{$paciente -> nome}}</span>
                     <span>{{ Carbon\Carbon::parse( $paciente -> entrada)->format('d/m/Y') }}</span>
                     <span>{{ Carbon\Carbon::parse( $paciente -> saida)->format('d/m/Y') }}</span>
+
                 </a>
             @endforeach
 
