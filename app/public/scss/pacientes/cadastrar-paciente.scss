@@ -72,18 +72,40 @@
             align-items: center;
             box-shadow: 5px 5px 15px 5px rgba($preto,0.5);
 
-            .incorreto{
+            span{
 
-                td{
+                width: 100%;
+                align-self: center;
 
-                    background-color: $vermelho;
+
+            }
+
+            .info-planilha{
+
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+                background-color: $azulPrincipal;
+                color: $branco;
+                padding: 10px;
+                border-radius: 5px;
+
+                span{
+
+                    font-weight: 600;
                 }
             }
 
-            table{
+            .incorreto{
+
+                background-color: $cinza;
+            }
+
+            .dados{
 
                 width: 100%;
-
+                display: flex;
+                justify-content: space-between;
             }
 
             .btn-cadastrar{
