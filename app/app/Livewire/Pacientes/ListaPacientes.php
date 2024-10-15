@@ -21,8 +21,6 @@ class ListaPacientes extends Component
 
         if ($search) {
 
-            try {
-
             $pacientes = Paciente::where(function ($query) use ($search) {
 
                 $query->Where('nome', 'like', '%' . $this->search . '%')
@@ -32,16 +30,11 @@ class ListaPacientes extends Component
 
             })
                 ->orderBy('created_at')
-                ->paginate(5);
-            }catch (\Exception $e) {
-
-                dd($e);
-
-            }
+                ->get();
 
         }else{
 
-            $pacientes = Paciente::paginate(5);
+            $pacientes = Paciente::all();
 
         }
 

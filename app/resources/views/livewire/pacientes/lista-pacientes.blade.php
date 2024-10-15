@@ -35,14 +35,6 @@
 
         </div>
 
-        @if ($pacientes->hasPages())
-
-            <div class="links">
-                {{$pacientes -> links()}}
-            </div>
-
-        @endif
-
     </div>
 
 </div>
