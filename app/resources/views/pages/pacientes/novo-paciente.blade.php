@@ -5,7 +5,6 @@
 
         <div class="bloco-formulario-paciente">
 
-
             <div class="cad-planilha">
 
                 <form action="/importar-planilha" method="post" enctype="multipart/form-data" class="formulario">
@@ -25,21 +24,20 @@
 
                 @if($dadosPlanilha != null)
 
-                    <form action="/salvar-planilha" method="post" enctype="multipart/form-data" class="formulario cad-planilha">
+                    <form action="/salvar-planilha" method="post" enctype="multipart/form-data" class="formulario visualizar-dados">
                         @csrf
-                        <table>
-                            <thead>
-                            <tr>
-                                <th>Nome</th>
-                                <th>Nascimento</th>
-                                <th>Código</th>
-                                <th>Guia</th>
-                                <th>Entrada</th>
-                                <th>Saída</th>
-                                <th>Alerta</th>
-                            </tr>
-                            </thead>
-                            <tbody>
+
+                        <div class="info-planilha">
+
+                            <span>Nome</span>
+                            <span>Nascimento</span>
+                            <span>Código</span>
+                            <span>Guia</span>
+                            <span>Entrada</span>
+                            <span>Saída</span>
+                            <span>Alerta</span>
+
+                        </div>
 
                             @php
                                 $combinacoes = [];
@@ -144,18 +142,18 @@
                                     }
                                 @endphp
 
-                                <tr class="@if($alerta) incorreto @endif">
-                                    <td>{{ $linha['nome'] }}</td>
-                                    <td>{{ $linha['nascimento'] }}</td>
-                                    <td>{{ $linha['codigo'] }}</td>
-                                    <td>{{ $linha['guia'] }}</td>
-                                    <td>{{ $linha['entrada'] }}</td>
-                                    <td>{{ $linha['saida'] }}</td>
-                                    <td>
+                                <div class="dados @if($alerta) incorreto @endif">
+                                    <span>{{ $linha['nome'] }}</span>
+                                    <span>{{ $linha['nascimento'] }}</span>
+                                    <span>{{ $linha['codigo'] }}</span>
+                                    <span>{{ $linha['guia'] }}</span>
+                                    <span>{{ $linha['entrada'] }}</span>
+                                    <span>{{ $linha['saida'] }}</span>
+                                    <span>
                                         @if ($alerta)
                                             <span class="alerta">{{ $alerta }}</span>
                                         @endif
-                                    </td>
+                                    </span>
 
                                     <input type="hidden" name="dadosPlanilha[{{ $index }}][nome]" value="{{ $linha['nome'] }}">
                                     <input type="hidden" name="dadosPlanilha[{{ $index }}][nascimento]" value="{{ $linha['nascimento'] }}">
@@ -164,12 +162,9 @@
                                     <input type="hidden" name="dadosPlanilha[{{ $index }}][entrada]" value="{{ $linha['entrada'] }}">
                                     <input type="hidden" name="dadosPlanilha[{{ $index }}][saida]" value="{{ $linha['saida'] }}">
                                     <input type="hidden" name="dadosPlanilha[{{ $index }}][alerta]" value="{{ $alerta }}">
-                                </tr>
+                                </div>
 
                             @endforeach
-
-                            </tbody>
-                        </table>
 
                         <button type="submit" @if($temAlerta || $codigoDivergente) disabled @endif>
                             Confirmar Importação
