@@ -5,7 +5,7 @@
 
         <div class="acesso-rapido bloco-conteudo">
 
-            <a class="item" href="/lista-pacientes">
+            <a class="item" href="/pacientes">
 
                 <i class="fa fa-users"></i>
 
