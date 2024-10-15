@@ -26,7 +26,7 @@ O **Censo Hospitalar** é uma aplicação web desenvolvida em Laravel para facil
 
 Antes de começar, você precisará ter as seguintes ferramentas instaladas em sua máquina:
 
-- [PHP 8.x](https://www.php.net/downloads)
+- [PHP](https://www.php.net/downloads)
 - [Composer](https://getcomposer.org/)
 - [MySQL](https://www.mysql.com/downloads/)
 - [Git](https://git-scm.com/)
