@@ -15,8 +15,8 @@ O **Censo Hospitalar** é uma aplicação web desenvolvida em Laravel para facil
 
 ## Tecnologias Utilizadas
 
-- PHP 8.x
-- Laravel 11.x
+- PHP
+- Laravel
 - MySQL
 - Composer
 - JavaScript
