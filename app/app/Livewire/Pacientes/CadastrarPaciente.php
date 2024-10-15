@@ -100,30 +100,26 @@ class CadastrarPaciente extends Component
     {
         foreach ($this->previaDadosPlanilha as $data) {
             try {
+                // Verifica se já existe um paciente com o mesmo nome e nascimento, mas com código diferente
                 $pacienteExistente = Paciente::where('nome', $data['nome'])
                     ->where('nascimento', Carbon::createFromFormat('d/m/Y', $data['nascimento'])->format('Y-m-d'))
-                    ->where('guia', '!=', $data['guia'])
                     ->first();
 
+                // Caso exista um paciente, verifique o código
                 if ($pacienteExistente) {
-                    Log::warning('Conflito encontrado para o paciente: ', $data);
-                    session()->flash('message', 'Paciente com nome ' . $data['nome'] . ' e nascimento ' . $data['nascimento'] . ' já possui cadastro. Verifique o código.');
-                    continue; // Continue ao próximo registro ao invés de retornar.
+                    if ($pacienteExistente->guia !== $data['guia']) {
+                        // Conflito encontrado: Paciente com mesmo nome e nascimento, mas guia diferente
+                        Log::warning('Conflito encontrado para o paciente: ', $data);
+                        session()->flash('message', 'Paciente com nome ' . $data['nome'] . ' e nascimento ' . $data['nascimento'] . ' já possui cadastro. Verifique o código na planilha.');
+                        continue; // Continua para o próximo registro
+                    }
                 }
 
-                $hoje =strtotime(Carbon::now()->format('Y-m-d'));
+                // Definição do status com base na data de saída
+                $hoje = strtotime(Carbon::now()->format('Y-m-d'));
+                $status = $hoje < strtotime($data['saida']) ? 'internado' : 'alta';
 
-
-                if ($hoje < strtotime($data['saida'])){
-
-                    $status = 'internado';
-
-                }else{
-
-                    $status = 'alta';
-
-                }
-
+                // Cadastra o paciente, já que não há conflitos
                 Paciente::create([
                     'nome' => $data['nome'],
                     'nascimento' => Carbon::createFromFormat('d/m/Y', $data['nascimento'])->format('Y-m-d'),
@@ -136,12 +132,14 @@ class CadastrarPaciente extends Component
 
                 Log::info('Paciente salvo com sucesso: ', $data);
             } catch (\Exception $e) {
+                // Registra erro e continua com o próximo paciente
                 Log::error('Erro ao salvar paciente: ' . $e->getMessage(), ['dados' => $data]);
                 session()->flash('message', 'Erro ao salvar paciente: ' . $e->getMessage());
-                continue; // Continue ao próximo registro ao invés de retornar.
+                continue;
             }
         }
 
+        // Limpa os dados da pré-visualização após a importação
         $this->previaDadosPlanilha = [];
         session()->flash('message', 'Todos os pacientes foram salvos com sucesso!');
     }
