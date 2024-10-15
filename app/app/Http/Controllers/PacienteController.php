@@ -24,14 +24,15 @@ class PacienteController extends Controller
     public function novoPaciente()
     {
 
+        $pacientes = Paciente::all();
+
         $dadosPlanilha = []; // Inicializa como um array vazio
-        return view('pages.pacientes.novo-paciente', compact('dadosPlanilha'));
+        return view('pages.pacientes.novo-paciente', compact('dadosPlanilha', 'pacientes'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
-
     public function importarPlanilha(Request $request)
     {
         $request->validate([
@@ -73,6 +74,8 @@ class PacienteController extends Controller
 
     public function salvarDadosPlanilha(Request $request)
     {
+        $contadorPacientes = 0;
+
         foreach ($request->dadosPlanilha as $linha) {
             if (!$linha['alerta']) {
 
@@ -86,6 +89,9 @@ class PacienteController extends Controller
                         'entrada' => Carbon::createFromFormat('d/m/Y', $linha['entrada'])->format('Y-m-d'),
                         'saida' => Carbon::createFromFormat('d/m/Y', $linha['saida'])->format('Y-m-d'),
                     ]);
+
+                    $contadorPacientes++;
+
                 }catch (\Exception $e) {
 
                     if ($e -> getCode() == '23000'){
@@ -96,7 +102,6 @@ class PacienteController extends Controller
 
                         }
 
-
                     }else{
 
                         return redirect('/novo-paciente')-> with('message', 'Erro ao salvar paciente:'. $e->getMessage());
@@ -106,49 +111,13 @@ class PacienteController extends Controller
             }
         }
 
-        return redirect('/pacientes')->with('message', 'Pacientes importados com sucesso!');
+        return redirect('/pacientes')->with('message', $contadorPacientes . ' pacientes cadastrados com sucesso!');
 
     }
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function cadastrarPaciente(Request $request)
-    {
-        $request->validate([
-            'nome' => 'required|string|max:255',
-            'nascimento' => 'required|date',
-            'guia' => 'required|unique:pacientes,guia',
-            'entrada' => 'required|date',
-            'saida' => 'nullable|date',
-        ]);
 
-        // Verifica se já existe um paciente com o mesmo nome e data de nascimento, mas com um código diferente.
-        $pacienteExistente = Paciente::where('nome', $request->nome)
-            ->where('nascimento', $request->nascimento)
-            ->where('guia', '!=', $request->guia)
-            ->first();
-
-        if ($pacienteExistente) {
-            return redirect()->back()->with('message', 'Paciente já possui cadastro com este nome e data de nascimento. Verifique o código do paciente.');
-        }
-
-        $codigo = Carbon::now()->format('Ymdis');
-
-        Paciente::create([
-            'nome' => $request->nome,
-            'nascimento' => $request->nascimento,
-            'codigo' => $codigo,
-            'guia' => $request->guia,
-            'entrada' => $request->entrada,
-            'saida' => $request->saida,
-        ]);
-
-        return redirect()->back()->with('message', 'Paciente cadastrado com sucesso!');
-    }
     /**
      * Store patients from an uploaded spreadsheet.
      */
-
 
     /**
      * Display the specified resource.

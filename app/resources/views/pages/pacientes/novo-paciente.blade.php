@@ -5,56 +5,6 @@
 
         <div class="bloco-formulario-paciente">
 
-            <div class="nav-form">
-
-                <a class="item-menu" onclick="document.querySelector('.cad-unico').style.display = 'flex';  document.querySelector('.cad-planilha').style.display = 'none'; ">Cadastro individual</a>
-                <a class="item-menu" onclick="document.querySelector('.cad-planilha').style.display = 'flex'; document.querySelector('.cad-unico').style.display = 'none';">Cadastro em massa</a>
-
-            </div>
-
-            <form action="/cadastrar" method="post" style="display: none" class="formulario cad-unico">
-                @csrf
-
-                <h2>Cadastrar Paciente</h2>
-
-                <div class="linha">
-                    <div class="grupo">
-                        <label for="nome">Nome</label>
-                        <input class="input" type="text" name="nome" id="nome">
-                        @error('nome') <span class="error">{{ $message }}</span> @enderror
-                    </div>
-
-                    <div class="grupo">
-                        <label for="nascimento">Data de Nascimento</label>
-                        <input class="input" type="date" name="nascimento" id="nascimento">
-                        @error('nascimento') <span class="error">{{ $message }}</span> @enderror
-                    </div>
-                </div>
-
-                <div class="linha">
-                    <div class="grupo">
-                        <label for="guia">Guia</label>
-                        <input class="input" type="text" name="guia" id="guia">
-                        @error('guia') <span class="error">{{ $message }}</span> @enderror
-                    </div>
-                </div>
-
-                <div class="linha">
-                    <div class="grupo">
-                        <label for="entrada">Entrada</label>
-                        <input class="input" type="date" name="entrada" id="entrada">
-                        @error('entrada') <span class="error">{{ $message }}</span> @enderror
-                    </div>
-
-                    <div class="grupo">
-                        <label for="saida">Saída</label>
-                        <input class="input" type="date" name="saida" id="saida">
-                        @error('saida') <span class="error">{{ $message }}</span> @enderror
-                    </div>
-                </div>
-
-                <button type="submit">Registrar</button>
-            </form>
 
             <div class="cad-planilha">
 
@@ -65,7 +15,7 @@
                     <div class="linha">
                         <div class="grupo">
                             <label for="planilha">Adicionar arquivo</label>
-                            <input class="input" type="file" id="planilha" name="planilha">
+                            <input class="input" required type="file" id="planilha" name="planilha">
                             @error('planilha') <span class="error">{{ $message }}</span> @enderror
                         </div>
                     </div>
@@ -96,11 +46,12 @@
                                 $guiaVerificada = [];
                                 $codigoDivergente = false;
                                 $guiasExistentes = [];
+                                $temAlerta = false; // Variável para verificar se existe algum alerta
                             @endphp
 
                             @foreach ($dadosPlanilha as $index => $linha)
 
-                                    @php
+                                @php
                                     $combinacao = $linha['nome'] . '|' . $linha['nascimento'];
                                     $alerta = null;
 
@@ -127,18 +78,71 @@
                                         }
                                     }
 
+                                    // Verifica se a data de saída é maior que a data de entrada
+                                    $dataEntrada = \Carbon\Carbon::createFromFormat('d/m/Y', $linha['entrada']);
+                                    $dataSaida = \Carbon\Carbon::createFromFormat('d/m/Y', $linha['saida']);
+                                    if ($dataSaida->lt($dataEntrada)) {
+                                        $alerta = 'Data incompatível: saída antes da entrada';
+                                    }
 
-                                    foreach ($pacientes as $paciente){
+                                    // Verifica se a data de entrada é anterior à data de nascimento
+                                    $dataNascimento = \Carbon\Carbon::createFromFormat('d/m/Y', $linha['nascimento']);
+                                    if ($dataEntrada->lt($dataNascimento)) {
+                                        $alerta = 'Data incompatível: entrada antes do nascimento';
+                                    }
 
-                                        if($paciente -> guia ==  $linha['guia']){
-
+                                    // Verifica se a guia já está cadastrada no banco
+                                    foreach ($pacientes as $paciente) {
+                                        if ($paciente->guia == $linha['guia']) {
                                             $alerta = 'Guia cadastrado';
+                                        }
+
+                                        // Verificação de conflitos de internação no banco de dados
+                                        if ($paciente->codigo == $linha['codigo']) {
+                                            $pacienteEntrada = \Carbon\Carbon::parse($paciente->entrada);
+                                            $pacienteSaida = $paciente->saida ? \Carbon\Carbon::parse($paciente->saida) : null;
+
+                                            // Se a internação atual não tem alta (paciente ainda internado)
+                                            if (!$pacienteSaida) {
+                                                // Bloqueia novas internações com data de entrada após a internação ainda ativa
+                                                if ($dataEntrada->gt($pacienteEntrada)) {
+                                                    $alerta = 'Conflito de internação: paciente ainda internado';
+                                                }
+                                            } else {
+                                                // Verifica se os períodos de internação conflitam
+                                                if (
+                                                    ($dataEntrada->lt($pacienteSaida) && $dataEntrada->gte($pacienteEntrada)) ||
+                                                    ($dataSaida->lte($pacienteSaida) && $dataSaida->gt($pacienteEntrada)) ||
+                                                    ($dataEntrada->lt($pacienteEntrada) && $dataSaida->gt($pacienteSaida))
+                                                ) {
+                                                    $alerta = 'Conflito de internação: período sobreposto';
+                                                }
+                                            }
                                         }
                                     }
 
-                                    @endphp
+                                    // Verificação de conflitos de internação entre as linhas da própria planilha
+                                    foreach ($dadosPlanilha as $outroIndex => $outraLinha) {
+                                        if ($index !== $outroIndex && $outraLinha['codigo'] == $linha['codigo']) {
+                                            $outraDataEntrada = \Carbon\Carbon::createFromFormat('d/m/Y', $outraLinha['entrada']);
+                                            $outraDataSaida = \Carbon\Carbon::createFromFormat('d/m/Y', $outraLinha['saida']);
 
+                                            // Verifica se os períodos de internação conflitam na planilha
+                                            if (
+                                                ($dataEntrada->lt($outraDataSaida) && $dataEntrada->gte($outraDataEntrada)) ||
+                                                ($dataSaida->lte($outraDataSaida) && $dataSaida->gt($outraDataEntrada)) ||
+                                                ($dataEntrada->lt($outraDataEntrada) && $dataSaida->gt($outraDataSaida))
+                                            ) {
+                                                $alerta = 'Conflito de internação na planilha: período sobreposto';
+                                            }
+                                        }
+                                    }
 
+                                    // Marca que existe um alerta, se houver
+                                    if ($alerta) {
+                                        $temAlerta = true;
+                                    }
+                                @endphp
 
                                 <tr class="@if($alerta) incorreto @endif">
                                     <td>{{ $linha['nome'] }}</td>
@@ -167,7 +171,7 @@
                             </tbody>
                         </table>
 
-                        <button type="submit" @if($codigoDivergente || $alerta) disabled @endif>
+                        <button type="submit" @if($temAlerta || $codigoDivergente) disabled @endif>
                             Confirmar Importação
                         </button>
 
