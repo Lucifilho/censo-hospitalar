@@ -13,4 +13,9 @@ class GeralController extends Controller
         return view('pages.home');
     }
 
+    public function suporte(){
+
+        return view('pages.suporte');
+    }
+
 }
