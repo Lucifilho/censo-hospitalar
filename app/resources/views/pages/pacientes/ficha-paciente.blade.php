@@ -76,18 +76,23 @@
             <div class="qnt-internacoes">
                 <h3>Internações</h3>
 
-                    <ul>
+                <div class="infos">
+
+                    <span>Guia</span>
+                    <span>Entrada</span>
+                    <span>Saida</span>
+
+                </div>
+                    <div class="dados">
                         @foreach($internacoes as $internacao)
-                            <li>
 
-                                <strong>Guia:</strong> {{ $internacao->guia }}<br>
-                                <strong>Data de Entrada:</strong> {{ $internacao->entrada }}<br>
-                                <strong>Data de Saída:</strong> {{ $internacao->saida ?? 'Ainda internado' }}<br>
+                        <span class="dado">{{ $internacao->guia }}</span>
+                        <span class="dado">{{ Carbon\Carbon::parse( $internacao -> entrada)->format('d/m/Y') }}</span>
+                        <span class="dado"> {{ Carbon\Carbon::parse( $internacao -> entrada)->format('d/m/Y') }}</span>
 
-                            </li>
                         @endforeach
 
-                    </ul>
+                    </div>
             </div>
 
 

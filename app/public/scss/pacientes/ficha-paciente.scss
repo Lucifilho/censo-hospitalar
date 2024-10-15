@@ -19,4 +19,33 @@
             text-align: center;
         }
     }
+
+    .qnt-internacoes{
+
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+
+        .dados, .infos{
+
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        .dados{
+
+            background-color: $azulPrincipal;
+            padding: 10px;
+            border-radius: 5px;
+
+
+            .dado{
+
+                color: $branco;
+            }
+        }
+    }
 }
