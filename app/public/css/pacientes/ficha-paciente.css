@@ -1,0 +1,1 @@
+.ficha-paciente{display:flex;justify-content:center}.ficha-paciente .bloco-paciente{display:flex;flex-direction:column;gap:20px;align-items:center;max-width:40%;width:100%}.ficha-paciente .bloco-paciente h2{text-align:center}

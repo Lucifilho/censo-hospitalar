@@ -1,0 +1,22 @@
+@import "../variaveis";
+
+.ficha-paciente{
+
+    display: flex;
+    justify-content: center;
+
+    .bloco-paciente{
+
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        align-items: center;
+        max-width: 40%;
+        width: 100%;
+
+        h2{
+
+            text-align: center;
+        }
+    }
+}
